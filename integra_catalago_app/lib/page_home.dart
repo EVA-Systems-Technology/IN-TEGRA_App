@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:integra_catalago_app/page_def.dart';
 import '../class/produto.dart';
+import 'services/api_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,20 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _produtosFuture = fetchProdutos();
-  }
-
-  Future<List<Produto>> fetchProdutos() async {
-    final response = await http.get(Uri.parse("http://10.0.2.2:3000/produtos"));
-
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
-      return data.map((e) => Produto.fromJson(e)).toList();
-    } else {
-      throw Exception(
-        "Erro ao carregar o catálogo! Código de erro: ${response.statusCode}",
-      );
-    }
+    _produtosFuture = ApiService.fetchProdutos();
   }
 
   @override
@@ -38,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("catapenes"),
+        title: Text("teste?"),
         backgroundColor: Colors.blueGrey,
       ),
       drawer: Drawer(
