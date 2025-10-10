@@ -9,7 +9,7 @@ app.use(cors());
 const db = mysql.createConnection({
   host: "localhost",  // ou ip
   user: "root",       // usuario
-  password: "12345678",       // senha
+  password: "alune",       // senha
   database: "IntegraDB"
 });
 
