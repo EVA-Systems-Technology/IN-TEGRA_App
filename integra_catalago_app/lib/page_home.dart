@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integra_catalago_app/widgets/appbar.dart';
 import 'package:integra_catalago_app/widgets/drawer.dart';
 import '../class/produto.dart';
 import 'services/api_service.dart';
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text("teste?"), backgroundColor: Colors.blueGrey),
+      appBar: const Appbar(),
       drawer: const AppDrawer(),
       body: Column(
         children: [

@@ -134,6 +134,8 @@ create table tbPagamento (
     foreign key (IdPedido) references tbPedido(IdPedido)
 );
 
+select * from tbProduto;
+
 insert into tbProduto(NomeProd, DescProd, ImgProd, PrecoProd) values ("Cadeira de rodas xlr8", "Uma cadeira de rodas baseada na coloração do alien XLR8 do Ben 10", "image/cadeira.png", 1234.99);
 
 insert into tbProduto(NomeProd, DescProd, ImgProd, PrecoProd) values ("Garfo Adaptado", "um garfo adaptado para facilitar a praticidade de pessoas com deficiencias motoras ao se alimentarem! ", "image/garfo.png", 78.99);
