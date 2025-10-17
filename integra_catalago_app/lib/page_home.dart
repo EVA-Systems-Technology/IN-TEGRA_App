@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const Appbar(),
+      appBar: const IntegraAppBar(),
       drawer: const AppDrawer(),
       body: Column(
         children: [

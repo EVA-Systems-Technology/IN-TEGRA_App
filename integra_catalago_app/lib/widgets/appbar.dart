@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 
-class Appbar extends StatelessWidget{
-  const Appbar({super.key});
+class IntegraAppBar extends StatelessWidget implements PreferredSizeWidget{
+  const IntegraAppBar({super.key});
+
+  final double _customHeight = 80;
+
 
   @override
   Widget build(BuildContext context){
     const Color primaryColor = Colors.white;
 
+    
+
     return AppBar(
       title: Text("Integra"),
       backgroundColor: primaryColor,
-      toolbarHeight: 12,
+      toolbarHeight: _customHeight,
     );
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(_customHeight);
+  
+
 }
