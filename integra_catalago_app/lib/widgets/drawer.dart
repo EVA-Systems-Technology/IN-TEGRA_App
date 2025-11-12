@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
@@ -49,6 +48,18 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context); // Fecha o drawer
               Navigator.pushNamed(context, '/deficiencias');
+            },
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.folder_copy, color: Colors.white),
+            title: const Text(
+              'Categorias',
+              style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
+            ),
+            onTap: () {
+              Navigator.pop(context); // Fecha o drawer
+              Navigator.pushNamed(context, '/categorias');
             },
           ),
         ],

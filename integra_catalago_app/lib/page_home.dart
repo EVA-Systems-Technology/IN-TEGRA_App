@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   late Future<List<Produto>> _produtosFuture;
 
   final TextEditingController _searchController = TextEditingController();
-  String _searchText = ''
+  String _searchText = '';
 
   @override
   void initState() {
@@ -61,11 +61,10 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         TextField(
-
                           controller: _searchController,
 
-                          onChanged: (value){
-                            setState((){
+                          onChanged: (value) {
+                            setState(() {
                               _searchText = value;
                             });
                           },
