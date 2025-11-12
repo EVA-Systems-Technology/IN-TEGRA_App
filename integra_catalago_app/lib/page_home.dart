@@ -1,3 +1,4 @@
+import '../widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:integra_catalago_app/widgets/appbar.dart';
 import 'package:integra_catalago_app/widgets/drawer.dart';
@@ -13,6 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<Produto>> _produtosFuture;
+
+  final TextEditingController _searchController = TextEditingController();
+  String _searchText = ''
 
   @override
   void initState() {
@@ -38,29 +42,48 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Color(0xFF2D3078),
+                color: Color.fromRGBO(41, 50, 118, 0.85),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xff151B55),
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(35),
+                        top: Radius.circular(20),
+                      ),
+                      boxShadow: [
+                        ]
+                      ),
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 2),
                     child: Column(
                       children: [
                         TextField(
+
+                          controller: _searchController,
+
+                          onChanged: (value){
+                            setState((){
+                              _searchText = value;
+                            });
+                          },
+
                           decoration: InputDecoration(
-                            hintText: "pesquisar",
-                            prefixIcon: Icon(
+                            hintText: "Pesquisar",
+                            suffixIcon: Icon(
                               Icons.search,
-                              color: Colors.white70,
+                              size: 40,
+                              color: Colors.white,
                             ),
                             filled: true,
-                            fillColor: Colors.white.withValues(alpha: 0.1),
+                            fillColor: Color(0xff5A5E86),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                               borderSide: BorderSide.none,
                             ),
-                            hintStyle: TextStyle(color: Colors.white70),
+                            hintStyle: TextStyle(color: Colors.white),
                           ),
                           style: TextStyle(color: Colors.white),
                         ),
@@ -122,36 +145,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                             itemCount: produtos.length,
                             itemBuilder: (context, index) {
-                              return Card(
-                                elevation: 4,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.image,
-                                          size: 50,
-                                          color: Colors.amber,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Text(
-                                        produtos[index].nomeProd,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    Text(
-                                      'R\$ ${produtos[index].precoProd}',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 9),
-                                  ],
-                                ),
-                              );
+                              return ProductCard(produto: produtos[index]);
                             },
                           );
                         },

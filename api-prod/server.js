@@ -7,35 +7,32 @@ app.use(cors());
 
 // Conexão MySQL
 const db = mysql.createConnection({
-  host: "localhost",  // ou ip
-  user: "root",       // usuario
-  password: "12345678",       // senha
-  database: "IntegraDB"
+  host: "localhost", // ou ip
+  user: "root", // usuario
+  password: "alune", // senha
+  database: "IntegraDB",
 });
 
 // Endpoint
 
-app.get("/produtos", (req, res) =>{
-
+app.get("/produtos", (req, res) => {
   const query = `
-    SELECT 
-      p.IdProd AS Codigo,
-      p.NomeProd AS NomeProd,
-      p.DescProd AS Descricao,
-      p.ImgProd AS FotProd,
-      p.PrecoProd AS Preco,
-      e.QtdEstoque AS QtdEstoque,
-      'Geral' AS Categoria 
-    FROM 
-      tbProduto AS p
-    LEFT JOIN 
-      tbEstoque AS e ON p.IdProd = e.IdProd;
+    SELECT
+          IdProd AS Codigo,
+          NomeProd AS NomeProd,
+          DescProd AS Descricao,
+          ImgProd AS FotProd,
+          PrecoProd AS Preco,
+          QtdProd AS QtdEstoque,
+          CategoriaProd AS Categoria
+        FROM
+          tbProduto;
   `;
 
   db.query(query, (erro, result) => {
     if (erro) return res.status(500).json({ error: erro.message });
     res.json(result);
-});
+  });
 });
 
 app.listen(3000, "0.0.0.0", () => {

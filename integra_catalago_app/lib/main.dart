@@ -14,19 +14,16 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Integra',
       debugShowCheckedModeBanner: false,
-      
 
-      //talvez colocar aqui uma centralização do theme do app? e definir as 
-      //rotas pra evitar escrever muito codigo igual. Também quero fazer o 
-      //drawer ficar em um "widget" proprio igual eu fiz com o api_service.dart
+      //talvez colocar aqui uma centralização do theme do app? e definir as
+      //rotas pra evitar escrever muito codigo igual. Também quero fazer o
+      //drawer ficar em um "widget" proprio igual eu fiz com o api_service.dart (feito lmao)
+      // vou deixar o productCard como um widget modular tbm !
       initialRoute: '/',
 
       routes: {
-
         '/': (context) => const HomePage(),
         '/deficiencias': (context) => const DefPage(),
-        
-
       },
     );
   }

@@ -1,6 +1,6 @@
 name: integra_catalago_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -23,6 +23,7 @@ flutter:
 
   assets:
     - assets/fonts/
+    - assets/image/
 
   fonts:
     - family: Alexandria
