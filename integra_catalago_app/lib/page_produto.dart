@@ -20,17 +20,10 @@ class _ProdutoPageState extends State<ProdutoPage> {
   @override
   void initState() {
     super.initState();
-
-    _relatedProdutos = _fetchRelatedProdutos();
-  }
-
-  Future<List<Produto>> _fetchRelatedProdutos() async {
-    final allProdutos = await ApiService.fetchProdutos();
-
-    return allProdutos.where((product) {
-      return product.categoria == widget.produto.categoria &&
-          product.codigo != widget.produto.codigo;
-    }).toList();
+    _relatedProdutos = ApiService.fetchRelatedProdutos(
+      categoria: widget.produto.categoria,
+      ignorarId: widget.produto.codigo,
+    );
   }
 
   @override
@@ -160,7 +153,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
               child: Column(
                 children: [
                   Text(
-                    'Descrição',
+                    'descrição',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -181,9 +174,76 @@ class _ProdutoPageState extends State<ProdutoPage> {
                 ],
               ),
             ),
+
+            const Padding(
+              padding: EdgeInsetsGeometry.only(bottom: 16),
+              child: Text(
+                'PRODUTOS RELACIONADOS',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontFamily: 'Alexandria',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            _buildRelatedProdutosList(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildRelatedProdutosList() {
+    return FutureBuilder<List<Produto>>(
+      future: _relatedProdutos,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          );
+        }
+
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        final relatedProdutos = snapshot.data!;
+
+        return Container(
+          decoration: const BoxDecoration(color: Color(0xff151B55)),
+          height: 250,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+            itemCount: relatedProdutos.length,
+            itemBuilder: (contex, index) {
+              final relatedProduct = relatedProdutos[index];
+
+              return SizedBox(
+                width: 160,
+                child: Padding(
+                  padding: const EdgeInsetsGeometry.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        contex,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProdutoPage(produto: relatedProduct),
+                        ),
+                      );
+                    },
+                    child: ProductCard(produto: relatedProduct),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

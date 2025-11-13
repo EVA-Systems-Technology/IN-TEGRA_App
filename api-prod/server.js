@@ -16,20 +16,46 @@ const db = mysql.createConnection({
 // Endpoint
 
 app.get("/produtos", (req, res) => {
-  const query = `
-    SELECT
-          IdProd AS Codigo,
-          NomeProd AS NomeProd,
-          DescProd AS Descricao,
-          ImgProd AS FotProd,
-          PrecoProd AS Preco,
-          QtdProd AS QtdEstoque,
-          CategoriaProd AS Categoria
-        FROM
-          tbProduto;
-  `;
+  const category = req.query.categoria || "";
+  const ignorarId = req.query.exclude || 0;
 
-  db.query(query, (erro, result) => {
+  let query = `
+    SELECT
+        IdProd AS Codigo,
+        NomeProd,
+        DescProd AS Descricao,
+        ImgProd AS FotProd,
+        PrecoProd AS Preco,
+        QtdProd AS QtdEstoque,
+        CategoriaProd AS Categoria
+      FROM
+        tbProduto
+    `;
+
+  const params = [];
+  const conditions = [];
+
+  if (category) {
+    conditions.push("CategoriaProd = ?");
+    params.push(category);
+  }
+
+  //eu espero que isso de certo pelo amor de deus
+
+  if (ignorarId > 0) {
+    conditions.push("IdProd != ?");
+    params.push(ignorarId);
+  }
+
+  if (conditions.length > 0) {
+    query += " WHERE " + conditions.join(" AND ");
+  }
+
+  if (category) {
+    query += " LIMIT 4";
+  }
+
+  db.query(query, params, (erro, result) => {
     if (erro) return res.status(500).json({ error: erro.message });
     res.json(result);
   });

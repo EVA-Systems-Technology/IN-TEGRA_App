@@ -27,7 +27,7 @@ class MainApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/deficiencias': (context) => const DefPage(),
 
-        'produto': (context) => ProdutoPage(
+        '/produto': (context) => ProdutoPage(
           produto: ModalRoute.of(context)!.settings.arguments as Produto,
         ),
       },
