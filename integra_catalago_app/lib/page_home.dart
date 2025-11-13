@@ -173,8 +173,17 @@ class _HomePageState extends State<HomePage> {
                                   ),
                               itemCount: filteredProd.length,
                               itemBuilder: (context, index) {
-                                return ProductCard(
-                                  produto: filteredProd[index],
+                                final produto = filteredProd[index];
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/produto',
+                                      arguments: produto,
+                                    );
+                                  },
+                                  child: ProductCard(produto: produto),
                                 );
                               },
                             );
