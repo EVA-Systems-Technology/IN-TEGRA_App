@@ -24,6 +24,7 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/deficiencias': (context) => const DefPage(),
+        // '/categorias': (context) => const CatePage(),
       },
     );
   }

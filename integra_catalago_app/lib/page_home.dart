@@ -26,8 +26,16 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _refreshProdutos() async {
     setState(() {
+      _searchController.clear();
+      _searchText = "";
       _produtosFuture = ApiService.fetchProdutos();
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -125,27 +133,55 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
 
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text('Nenhum produto encontrado.'),
+                          if (snapshot.hasData) {
+                            final allProdutos = snapshot.data!;
+
+                            final filteredProd = allProdutos.where((produtos) {
+                              final nameProduto = produtos.nomeProd
+                                  .toLowerCase();
+                              final descProduto = produtos.descricaoProd
+                                  .toLowerCase();
+                              final searchMin = _searchText.toLowerCase();
+
+                              return nameProduto.contains(searchMin) ||
+                                  descProduto.contains(searchMin);
+                            }).toList();
+
+                            if (filteredProd.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  _searchText.isEmpty
+                                      ? 'nenhum produto registrado'
+                                      : 'Nenhum resultado para "$_searchText"',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Alexandria',
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                            }
+
+                            return GridView.builder(
+                              padding: const EdgeInsets.all(16),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 16,
+                                    mainAxisSpacing: 16,
+                                    childAspectRatio: 0.75,
+                                  ),
+                              itemCount: filteredProd.length,
+                              itemBuilder: (context, index) {
+                                return ProductCard(
+                                  produto: filteredProd[index],
+                                );
+                              },
                             );
                           }
 
-                          final produtos = snapshot.data!;
-
-                          return GridView.builder(
-                            padding: const EdgeInsets.all(16),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 16,
-                                  mainAxisSpacing: 16,
-                                  childAspectRatio: 0.75,
-                                ),
-                            itemCount: produtos.length,
-                            itemBuilder: (context, index) {
-                              return ProductCard(produto: produtos[index]);
-                            },
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
                         },
                       ),
