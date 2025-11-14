@@ -12,6 +12,12 @@ class IntegraAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Image.asset('assets/image/integraLogo.png', height: 120),
       backgroundColor: Colors.white,
       toolbarHeight: _customHeight,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
+      ),
+
+      scrolledUnderElevation: 0,
+      surfaceTintColor: Colors.transparent,
     );
   }
 

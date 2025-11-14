@@ -16,6 +16,12 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'IN-TEGRA Catálogo',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
+        ),
+      ),
 
       //talvez colocar aqui uma centralização do theme do app? e definir as
       //rotas pra evitar escrever muito codigo igual. Também quero fazer o

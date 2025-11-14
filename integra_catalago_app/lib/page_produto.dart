@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:integra_catalago_app/widgets/drawer.dart';
 import '../class/produto.dart';
 import '../services/api_service.dart';
+import '../widgets/appfooter.dart';
 import 'package:gap/gap.dart';
 import '../widgets/product_card.dart';
 import '../widgets/appbar.dart';
@@ -190,6 +191,10 @@ class _ProdutoPageState extends State<ProdutoPage> {
             ),
 
             _buildRelatedProdutosList(),
+
+            const Gap(30),
+
+            const IntegraFooter(),
           ],
         ),
       ),

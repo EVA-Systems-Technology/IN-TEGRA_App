@@ -34,8 +34,8 @@ class AppDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
             ),
             onTap: () {
-              // Apenas fecha o drawer
               Navigator.pop(context);
+              Navigator.pushNamed(context, '/home');
             },
           ),
 
@@ -46,7 +46,7 @@ class AppDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
             ),
             onTap: () {
-              Navigator.pop(context); // Fecha o drawer
+              Navigator.pop(context);
               Navigator.pushNamed(context, '/deficiencias');
             },
           ),
@@ -58,7 +58,7 @@ class AppDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
             ),
             onTap: () {
-              Navigator.pop(context); // Fecha o drawer
+              Navigator.pop(context);
               Navigator.pushNamed(context, '/categorias');
             },
           ),
