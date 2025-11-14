@@ -81,7 +81,14 @@ insert into tbProduto(NomeProd, DescProd, ImgProd, PrecoProd, QtdProd, Categoria
 
 insert into tbProduto(NomeProd, DescProd, ImgProd, PrecoProd) values ("Garfo Adaptado", "um garfo adaptado para facilitar a praticidade de pessoas com deficiencias motoras ao se alimentarem! ", "image/garfo.png", 78.99);
 
-insert into tbProduto(NomeProd, DescProd, ImgProd, PrecoProd) values ("Muletas 'The root'", "Par de muletas com tamanho ajustavel! ", "image/garfo.png", 83.99)
-
+INSERT INTO tbProduto(NomeProd, DescProd, ImgProd, PrecoProd, QtdProd, CategoriaProd)
+VALUES
+("Abridor de Potes Elétrico", "Abre potes e tampas de garrafa com um único toque, ideal para quem tem artrite ou força limitada nas mãos.", "image/abridor_potes.png", 189.90, 30, "Acessórios"),
+("Tábua de Corte Adaptada", "Tábua com pinos de inox e borda elevada, permite fixar alimentos para cortar usando apenas uma mão.", "image/tabua_adaptada.png", 139.90, 25, "Acessórios"),
+("Calçador de Meias", "Dispositivo curvo que ajuda a vestir meias e meias de compressão sem precisar se curvar ou levantar as pernas.", "image/calcador_meias.png", 45.00, 50, "Acessórios"),
+("Pinça Pegadora Dobrável 80cm", "Braço extensor leve com gatilho para pegar objetos em locais altos ou no chão, evitando quedas.", "image/pinca_alcancador.png", 65.00, 75, "Acessórios"),
+("Campainha sem Fio com Alerta Visual", "Campainha com receptor portátil que pisca luzes de LED e vibra. Ideal para deficiência auditiva.", "image/campainha_luz.png", 175.00, 30, "Audição"),
+("Botão Comunicador de Voz Gravável", "Botão de fácil pressão que grava e reproduz uma mensagem de 30 segundos. Para comunicação alternativa (AAC).", "image/botao_comunicador.png", 250.00, 20, "Comunicação"),
+("Disco de Transferência Giratório", "Disco de 40cm que gira 360º, facilita a transferência segura de pacientes da cama para a cadeira.", "image/disco_transferencia.png", 210.00, 15, "Mobilidade");
 
 -- trigger de quando fizer login ele registra na tb login

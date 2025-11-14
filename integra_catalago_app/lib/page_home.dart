@@ -1,3 +1,5 @@
+import 'package:integra_catalago_app/widgets/appfooter.dart';
+
 import '../widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:integra_catalago_app/widgets/appbar.dart';
@@ -16,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   late Future<List<Produto>> _produtosFuture;
 
   final TextEditingController _searchController = TextEditingController();
-  String _searchText = ''
+  String _searchText = '';
 
   @override
   void initState() {
@@ -26,8 +28,16 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _refreshProdutos() async {
     setState(() {
+      _searchController.clear();
+      _searchText = "";
       _produtosFuture = ApiService.fetchProdutos();
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,105 +46,125 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: const IntegraAppBar(),
       drawer: const AppDrawer(),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(41, 50, 118, 0.85),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff151B55),
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(35),
-                        top: Radius.circular(20),
-                      ),
-                      boxShadow: [
+      body: RefreshIndicator(
+        onRefresh: _refreshProdutos,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(41, 50, 118, 0.85),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xff151B55),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(35),
+                          top: Radius.circular(20),
+                        ),
+                        boxShadow: [
                         ]
                       ),
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 2),
-                    child: Column(
-                      children: [
-                        TextField(
+                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 2),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: _searchController,
 
-                          controller: _searchController,
+                            onChanged: (value) {
+                              setState(() {
+                                _searchText = value;
+                              });
+                            },
 
-                          onChanged: (value){
-                            setState((){
-                              _searchText = value;
-                            });
-                          },
-
-                          decoration: InputDecoration(
-                            hintText: "Pesquisar",
-                            suffixIcon: Icon(
-                              Icons.search,
-                              size: 40,
-                              color: Colors.white,
+                            decoration: InputDecoration(
+                              hintText: "Pesquisar",
+                              suffixIcon: Icon(
+                                Icons.search,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              filled: true,
+                              fillColor: Color(0xff5A5E86),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide.none,
+                              ),
+                              hintStyle: TextStyle(color: Colors.white),
                             ),
-                            filled: true,
-                            fillColor: Color(0xff5A5E86),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                            hintStyle: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white),
                           ),
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "filtrar",
-                            style: TextStyle(
-                              color: Colors.white,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "filtrar",
+                              style: TextStyle(
+                                color: Colors.white,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: _refreshProdutos,
-                      child: FutureBuilder(
-                        future: _produtosFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
+                    FutureBuilder(
+                      future: _produtosFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                          if (snapshot.hasError) {
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              'Ocorreu um erro! ${snapshot.error}',
+                              style: TextStyle(
+                                fontFamily: 'Alexandria',
+                                color: Colors.red,
+                              ),
+                            ),
+                          );
+                        }
+
+                        if (snapshot.hasData) {
+                          final allProdutos = snapshot.data!;
+
+                          final filteredProd = allProdutos.where((produtos) {
+                            final nameProduto = produtos.nomeProd.toLowerCase();
+                            final descProduto = produtos.descricaoProd
+                                .toLowerCase();
+                            final searchMin = _searchText.toLowerCase();
+
+                            return nameProduto.contains(searchMin) ||
+                                descProduto.contains(searchMin);
+                          }).toList();
+
+                          if (filteredProd.isEmpty) {
                             return Center(
                               child: Text(
-                                'Ocorreu um erro! ${snapshot.error}',
-                                style: TextStyle(
+                                _searchText.isEmpty
+                                    ? 'nenhum produto registrado'
+                                    : 'Nenhum resultado para "$_searchText"',
+                                style: const TextStyle(
+                                  color: Colors.white,
                                   fontFamily: 'Alexandria',
-                                  color: Colors.red,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             );
                           }
 
-                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                            return const Center(
-                              child: Text('Nenhum produto encontrado.'),
-                            );
-                          }
-
-                          final produtos = snapshot.data!;
-
                           return GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
                             padding: const EdgeInsets.all(16),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -143,20 +173,35 @@ class _HomePageState extends State<HomePage> {
                                   mainAxisSpacing: 16,
                                   childAspectRatio: 0.75,
                                 ),
-                            itemCount: produtos.length,
+                            itemCount: filteredProd.length,
                             itemBuilder: (context, index) {
-                              return ProductCard(produto: produtos[index]);
+                              final produto = filteredProd[index];
+
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/produto',
+                                    arguments: produto,
+                                  );
+                                },
+                                child: ProductCard(produto: produto),
+                              );
                             },
                           );
-                        },
-                      ),
+                        }
+
+                        return const Center(child: CircularProgressIndicator());
+                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+
+              const IntegraFooter(),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
