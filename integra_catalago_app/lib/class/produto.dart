@@ -19,24 +19,35 @@ class Produto {
     required this.categoria,
   });
 
-  factory Produto.fromJson(Map<String, dynamic> json){
-  return Produto(
-    // Para números, use tryParse com um valor padrão
-    codigo: int.tryParse(json["Codigo"]?.toString() ?? '') ?? -1, 
-    
-    // Para Strings, use o operador '??'
-    nomeProd: json["NomeProd"] ?? 'Nome Indisponível', 
-    
-    precoProd: Decimal.tryParse(json["Preco"]?.toString() ?? '') ?? Decimal.zero, 
-    
-    descricaoProd: json["Descricao"] ?? 'Sem descrição', 
-    
-    qtdEstoque: int.tryParse(json["QtdEstoque"]?.toString() ?? '') ?? 0, 
-    
-    fotProd: json["FotProd"] ?? '',
-    
-    categoria: json["Categoria"] ?? 'Sem categoria',
-  );
-}
+  factory Produto.fromJson(Map<String, dynamic> json) {
+    return Produto(
+      // Para números, use tryParse com um valor padrão
+      codigo: int.tryParse(json["Codigo"]?.toString() ?? '') ?? -1,
 
+      // Para Strings, use o operador '??'
+      nomeProd: json["NomeProd"] ?? 'Nome Indisponível',
+
+      precoProd:
+          Decimal.tryParse(json["Preco"]?.toString() ?? '') ?? Decimal.zero,
+
+      descricaoProd: json["Descricao"] ?? 'Sem descrição',
+
+      qtdEstoque: int.tryParse(json["QtdEstoque"]?.toString() ?? '') ?? 0,
+
+      fotProd: json["FotProd"] ?? '',
+
+      categoria: json["Categoria"] ?? 'Sem categoria',
+    );
+  }
+  String getPrecoFormatado() {
+    return 'R\$ ${precoProd.toStringAsFixed(2).replaceAll('.', ',')}';
+  }
+
+  String getCaminhoImagem() {
+    return 'assets/$fotProd';
+  }
+
+  bool temEstoque() {
+    return qtdEstoque > 0;
+  }
 }
