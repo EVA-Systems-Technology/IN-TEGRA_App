@@ -38,30 +38,6 @@ class AppDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/home');
             },
           ),
-
-          ListTile(
-            leading: const Icon(Icons.accessible, color: Colors.white),
-            title: const Text(
-              'Deficiências',
-              style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/deficiencias');
-            },
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.folder_copy, color: Colors.white),
-            title: const Text(
-              'Categorias',
-              style: TextStyle(color: Colors.white, fontFamily: 'Alexandria'),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/categorias');
-            },
-          ),
         ],
       ),
     );

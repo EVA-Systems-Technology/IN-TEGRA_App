@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:integra_catalago_app/class/produto.dart';
-import 'package:integra_catalago_app/page_def.dart';
 import 'package:integra_catalago_app/page_produto.dart';
 import 'page_home.dart';
 
@@ -31,7 +30,6 @@ class MainApp extends StatelessWidget {
 
       routes: {
         '/home': (context) => const HomePage(),
-        '/deficiencias': (context) => const DefPage(),
 
         '/produto': (context) => ProdutoPage(
           produto: ModalRoute.of(context)!.settings.arguments as Produto,
