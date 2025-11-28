@@ -13,7 +13,7 @@ const db = mysql.createConnection({
   database: "IntegraDB",
 });
 
-// Endpoint
+// Endpoint1
 
 app.get("/produtos", (req, res) => {
   const category = req.query.categoria || "";
