@@ -8,7 +8,7 @@ Este projeto foi desenvolvido como parte do Trabalho de Conclusão de Curso (TCC
 ## Pré-requisitos
 
   * [Flutter SDK](https://flutter.dev/docs/get-started/install)
-  * [Node.js](https://nodejs.org/) (v16 ou superior)
+  * [Node.js](https://nodejs.org/)
   * [MySQL](https://www.mysql.com/)
   * (opcional): Um dispositivo físico Android ou Emulador Android.
 
