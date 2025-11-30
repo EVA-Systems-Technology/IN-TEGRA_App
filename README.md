@@ -78,3 +78,10 @@ Com a API rodando, só falta iniciar o aplicativo.
 ```bash
 flutter run
 ```
+
+
+# Paginas wiki
+
+[Home](https://github.com/EVA-Systems-Technology/IN-TEGRA_App/wikil)
+
+[Explicação do código](https://github.com/EVA-Systems-Technology/IN-TEGRA_App/wiki/Explica%C3%A7%C3%A3o-do-c%C3%B3digo)
